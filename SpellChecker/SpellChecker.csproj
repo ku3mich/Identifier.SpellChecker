@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="en_US.aff" />
+		<None Remove="en_US.dic" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="en_US.aff" />
+		<EmbeddedResource Include="en_US.dic" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
+	</ItemGroup>
+
+</Project>
