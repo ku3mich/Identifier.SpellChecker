@@ -10,3 +10,4 @@ namespace SpellChecker
         public IEnumerable<string> Suggest(string word) => Spell.Checker.Suggest(word);
     }
 }
+

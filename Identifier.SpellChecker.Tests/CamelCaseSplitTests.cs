@@ -11,13 +11,37 @@ namespace Identifier.SpellChecker.Tests
             Assert.Empty(((string)null).SplitCamelCase());
         }
 
+
+        [Fact]
+        public void AnalyzeEmpty()
+        {
+            Assert.Empty(((string)null).SplitCamelCase().Analyze());
+        }
+
+        [Theory]
+        [InlineData("A", "A")]
+        [InlineData("IInterface", "I")]
+        [InlineData("InterfaceABBR", "ABBR")]
+        [InlineData("XCode", "X")]
+        public void Abbreviation(string testCase, string expected)
+        {
+            var parts = testCase
+                .SplitCamelCase()
+                .Analyze()
+                .Where(s => s.Type == PartType.Abbreviation)
+                .ToArray();
+
+            Assert.Single(parts);
+            Assert.Equal(expected, parts[0].Value);
+        }
+
         [Fact]
         public void LowerCaseWord()
         {
             var results = "word".SplitCamelCase().ToArray();
             Assert.Single(results);
             var result = results[0];
-            Assert.Equal("word", result.Part);
+            Assert.Equal("word", result.Value);
             Assert.Equal(PartType.Word, result.Type);
         }
 
@@ -27,8 +51,8 @@ namespace Identifier.SpellChecker.Tests
             var results = "wordBreak".SplitCamelCase().ToArray();
             Assert.Equal(2, results.Length);
             Assert.All(results, s => Assert.Equal(PartType.Word, s.Type));
-            Assert.Equal("word", results[0].Part);
-            Assert.Equal("Break", results[1].Part);
+            Assert.Equal("word", results[0].Value);
+            Assert.Equal("Break", results[1].Value);
         }
 
         [Fact]

@@ -122,7 +122,7 @@
     <comment>Spell checker runs againt parts of a symbol.</comment>
   </data>
   <data name="AnalyzerMessageFormat" xml:space="preserve">
-    <value>Symbol '{0}' contains incorrect spelling</value>
+    <value>Symbol '{0}' contains typos: {1}</value>
     <comment>Possible typo.</comment>
   </data>
   <data name="AnalyzerTitle" xml:space="preserve">

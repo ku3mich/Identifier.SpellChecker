@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using SpellChecker;
 
 namespace Identifier.SpellChecker
@@ -12,6 +15,12 @@ namespace Identifier.SpellChecker
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class IdentifierSpellCheckerAnalyzer : DiagnosticAnalyzer
     {
+        static IdentifierSpellCheckerAnalyzer()
+        {
+            Binder.Bind();
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(Binder.LocalFolder, "nlog.config"));
+        }
+
         public const string DiagnosticId = "ISC1000";
 
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
@@ -46,6 +55,9 @@ namespace Identifier.SpellChecker
 
         protected IServiceProvider ServiceProvider;
 
+        ILogger<IdentifierSpellCheckerAnalyzer> Logger;
+
+        readonly List<ISpellChecker> CustomCheckers = new List<ISpellChecker>();
 
         public IdentifierSpellCheckerAnalyzer()
         {
@@ -55,11 +67,26 @@ namespace Identifier.SpellChecker
         {
             ConfigureLogger(services);
             ConfigureSpeller(services);
+            services.AddTransient<IIdentifierSpeller, IdentifierSpeller>();
+            services.AddSingleton<IEnumerable<ISpellChecker>>(CustomCheckers);
+            var analyzerTypes = typeof(IdentifierSpellCheckerAnalyzer)
+                .Assembly
+                .GetTypes()
+                .Where(s => s.IsClass && !s.IsAbstract && typeof(ISymbolAnalyzer).IsAssignableFrom(s));
+
+            foreach (var analyzerType in analyzerTypes)
+            {
+                services.AddSingleton(typeof(ISymbolAnalyzer), analyzerType);
+            }
         }
 
         protected virtual void ConfigureLogger(IServiceCollection services)
         {
-            services.AddLogging();
+            services.AddLogging(s =>
+           {
+               s.SetMinimumLevel(LogLevel.Trace);
+               s.AddNLog();
+           });
         }
 
         protected virtual void ConfigureSpeller(IServiceCollection services)
@@ -67,41 +94,54 @@ namespace Identifier.SpellChecker
             services.AddSingleton(WordListChecker.Instance);
         }
 
-        ILogger<IdentifierSpellCheckerAnalyzer> Logger;
-        ISpellChecker SpellChecker;
-
         public override void Initialize(AnalysisContext context)
         {
             var services = new ServiceCollection();
             ConfigureServices(services);
 
             ServiceProvider = services.BuildServiceProvider();
-
             Logger = ServiceProvider.GetRequiredService<ILogger<IdentifierSpellCheckerAnalyzer>>();
-            SpellChecker = ServiceProvider.GetRequiredService<ISpellChecker>();
+
             Logger.LogTrace("Initialize");
+            context.RegisterCompilationStartAction(ReloadCustomDictionaries);
 
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            context.EnableConcurrentExecution();
+            // context.EnableConcurrentExecution();
 
-            // TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
-            // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
-            context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.NamedType);
+            var symbolAnalyzers = ServiceProvider.GetRequiredService<IEnumerable<ISymbolAnalyzer>>();
+
+            foreach (var analyzer in symbolAnalyzers)
+            {
+                Logger.LogTrace($"registering analyzer: {analyzer.GetType().Name} for {analyzer.Kind}");
+                context.RegisterSymbolAction(analyzer.Analyze, analyzer.Kind);
+            }
         }
 
-        private void AnalyzeSymbol(SymbolAnalysisContext context)
+#pragma warning disable RS1012 // Start action has no registered actions
+        private void ReloadCustomDictionaries(CompilationStartAnalysisContext context)
+#pragma warning restore RS1012 // Start action has no registered actions
         {
-            var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
-            var parts = namedTypeSymbol.Name.SplitCamelCase();
-            var typo = parts
-                .Where(s => s.Type == PartType.Word)
-                .Any(s => !SpellChecker.Check(s.Part));
+            CustomCheckers.Clear();
 
-            if (!typo)
-                return;
+            var additionalFiles = context.Options.AdditionalFiles;
+            var checkers = additionalFiles
+                .Where(s => Path.GetExtension(s.Path) == ".spell")
+                .Select(s =>
+                {
+                    try
+                    {
+                        var c = new FileWordListChecker(s.Path);
+                        return c;
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex, "while loading dictionary: {0}", s);
+                        return null;
+                    }
+                })
+                .Where(s => s != null);
 
-            var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
-            context.ReportDiagnostic(diagnostic);
+            CustomCheckers.AddRange(checkers);
         }
     }
 }

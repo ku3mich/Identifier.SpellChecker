@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Xunit;
 
 namespace SpellChecker.Tests
@@ -33,5 +31,7 @@ namespace SpellChecker.Tests
             var result = Spell.Checker.Suggest("fathe");
             Assert.NotEmpty(result);
         }
+
+
     }
 }

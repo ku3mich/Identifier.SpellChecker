@@ -70,7 +70,7 @@ namespace Identifier.SpellChecker {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; contains incorrect spelling.
+        ///   Looks up a localized string similar to Symbol &apos;{0}&apos; contains typos: {1}.
         /// </summary>
         internal static string AnalyzerMessageFormat {
             get {

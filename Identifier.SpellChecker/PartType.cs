@@ -4,6 +4,7 @@
     {
         Empty,
         Word,
+        Abbreviation,
         Else
     }
 }

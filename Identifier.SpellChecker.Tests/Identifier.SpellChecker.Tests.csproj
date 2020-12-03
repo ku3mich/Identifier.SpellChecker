@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Identifier.SpellChecker.CodeFixes\Identifier.SpellChecker.CodeFixes.csproj" />
 		<ProjectReference Include="..\Identifier.SpellChecker\Identifier.SpellChecker.csproj" />
+		<ProjectReference Include="..\SpellChecker\SpellChecker.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="sample/**/*.*" />
