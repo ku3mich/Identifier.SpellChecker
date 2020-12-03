@@ -3,11 +3,11 @@
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>true</IsPackable>
         <PackageId>Identifier.SpellChecker</PackageId>
-        <PackageVersion>0.0.43</PackageVersion>
+        <PackageVersion>0.0.44</PackageVersion>
         <Authors>Serhii Kuzmychov</Authors>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageLicenseUrl>https://github.com/ku3mich/Identifier.SpellChecker/blob/master/LICENCE</PackageLicenseUrl>
+        <PackageLicenseUrl>https://github.com/ku3mich/Identifier.SpellChecker/blob/master/LICENSE</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/ku3mich/Identifier.SpellChecker</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ku3mich/Identifier.SpellChecker</RepositoryUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
