@@ -53,14 +53,26 @@ namespace Identifier.SpellChecker
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(Rule);
 
-        protected IServiceProvider ServiceProvider;
+        protected IServiceProvider ServiceProvider => _ServiceProvider.Value;
+        readonly Lazy<IServiceProvider> _ServiceProvider;
 
-        ILogger<IdentifierSpellCheckerAnalyzer> Logger;
+        readonly Lazy<ILogger<IdentifierSpellCheckerAnalyzer>> _Logger;
+        ILogger<IdentifierSpellCheckerAnalyzer> Logger => _Logger.Value;
 
         readonly List<ISpellChecker> CustomCheckers = new List<ISpellChecker>();
 
         public IdentifierSpellCheckerAnalyzer()
         {
+            _ServiceProvider = new Lazy<IServiceProvider>(() =>
+            {
+                var services = new ServiceCollection();
+                ConfigureServices(services);
+                return services.BuildServiceProvider();
+            }, true);
+
+            _Logger = new Lazy<ILogger<IdentifierSpellCheckerAnalyzer>>(
+                () => ServiceProvider.GetRequiredService<ILogger<IdentifierSpellCheckerAnalyzer>>(),
+                true);
         }
 
         protected virtual void ConfigureServices(IServiceCollection services)
@@ -96,12 +108,6 @@ namespace Identifier.SpellChecker
 
         public override void Initialize(AnalysisContext context)
         {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-
-            ServiceProvider = services.BuildServiceProvider();
-            Logger = ServiceProvider.GetRequiredService<ILogger<IdentifierSpellCheckerAnalyzer>>();
-
             Logger.LogTrace("Initialize");
             context.RegisterCompilationStartAction(ReloadCustomDictionaries);
 
