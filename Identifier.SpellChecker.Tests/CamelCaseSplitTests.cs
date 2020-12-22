@@ -25,7 +25,7 @@ namespace Identifier.SpellChecker.Tests
         [InlineData("XCode", "X")]
         public void Abbreviation(string testCase, string expected)
         {
-            var parts = testCase
+            IdentifierPart[] parts = testCase
                 .SplitCamelCase()
                 .Analyze()
                 .Where(s => s.Type == PartType.Abbreviation)
@@ -38,9 +38,9 @@ namespace Identifier.SpellChecker.Tests
         [Fact]
         public void LowerCaseWord()
         {
-            var results = "word".SplitCamelCase().ToArray();
+            IdentifierPart[] results = "word".SplitCamelCase().ToArray();
             Assert.Single(results);
-            var result = results[0];
+            IdentifierPart result = results[0];
             Assert.Equal("word", result.Value);
             Assert.Equal(PartType.Word, result.Type);
         }
@@ -48,7 +48,7 @@ namespace Identifier.SpellChecker.Tests
         [Fact]
         public void CamelCase()
         {
-            var results = "wordBreak".SplitCamelCase().ToArray();
+            IdentifierPart[] results = "wordBreak".SplitCamelCase().ToArray();
             Assert.Equal(2, results.Length);
             Assert.All(results, s => Assert.Equal(PartType.Word, s.Type));
             Assert.Equal("word", results[0].Value);
@@ -58,7 +58,7 @@ namespace Identifier.SpellChecker.Tests
         [Fact]
         public void CamelCaseElse()
         {
-            var results = "word1Break".SplitCamelCase().ToArray();
+            IdentifierPart[] results = "word1Break".SplitCamelCase().ToArray();
             Assert.Equal(3, results.Length);
             Assert.Contains(new IdentifierPart("1", PartType.Else), results);
         }

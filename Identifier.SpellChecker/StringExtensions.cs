@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Identifier.SpellChecker
@@ -20,14 +18,14 @@ namespace Identifier.SpellChecker
 
         public static List<IdentifierPart> Analyze(this IEnumerable<IdentifierPart> indetifierParts)
         {
-            var parts = indetifierParts.GetEnumerator();
-            var result = new List<IdentifierPart>();
+            IEnumerator<IdentifierPart> parts = indetifierParts.GetEnumerator();
+            List<IdentifierPart> result = new List<IdentifierPart>();
 
             if (!parts.MoveNext())
                 return result;
 
-            var prev = parts.Current;
-            var sb = new StringBuilder();
+            IdentifierPart prev = parts.Current;
+            StringBuilder sb = new StringBuilder();
             void Collect()
             {
                 if (sb.Length == 0)
@@ -67,12 +65,12 @@ namespace Identifier.SpellChecker
             if (string.IsNullOrWhiteSpace(identifier))
                 yield break;
 
-            var sb = new StringBuilder();
-            var partType = PartType.Empty;
+            StringBuilder sb = new StringBuilder();
+            PartType partType = PartType.Empty;
 
-            foreach (var ch in identifier)
+            foreach (char ch in identifier)
             {
-                var charType = GetPartType(ch);
+                PartType charType = GetPartType(ch);
                 if (charType == partType && !char.IsUpper(ch))
                 {
                     sb.Append(ch);

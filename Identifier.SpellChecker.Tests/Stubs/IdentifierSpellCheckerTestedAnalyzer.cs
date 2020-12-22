@@ -13,7 +13,7 @@ namespace Identifier.SpellChecker.Tests
 
         public IdentifierSpellCheckerTestedAnalyzer()
         {
-            var parameters = XunitContext.Context.Parameters;
+            System.Collections.Generic.IReadOnlyList<Parameter> parameters = XunitContext.Context.Parameters;
 
             TestOutputHelper = XunitContext.Context.TestOutput;
             SpellChecker = (ISpellChecker)parameters[1].Value;

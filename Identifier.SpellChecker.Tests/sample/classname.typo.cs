@@ -1,6 +1,3 @@
-﻿namespace ConsoleApplication
+﻿class {|#0:Aplication|}
 {
-    class {|#0:Aplication|}
-    {
-    }
 }

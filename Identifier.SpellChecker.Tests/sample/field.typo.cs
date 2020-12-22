@@ -1,8 +1,5 @@
-﻿namespace ConsoleAplication
+﻿class A
 {
-    class A
-    {
-        int My;
-        int {|#0:Asdgcbn|};
-    }
+    int My;
+    int {|#0:Asdgcbn|};
 }

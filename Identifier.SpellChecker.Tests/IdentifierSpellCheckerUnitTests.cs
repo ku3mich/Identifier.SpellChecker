@@ -10,7 +10,7 @@ namespace Identifier.SpellChecker.Tests
         [Fact]
         public async Task Empty()
         {
-            var test = @"";
+            string test = @"";
             await VerifyCS.VerifyAnalyzerAsync(test);
         }
 
@@ -19,7 +19,7 @@ namespace Identifier.SpellChecker.Tests
         [FileContent("sample/test.cs", "sample/test.e.cs")]
         public async Task FixpUp(string test, string fixtest)
         {
-            var expected = VerifyCS.Diagnostic("ISC1000").WithLocation(0).WithArguments("TypeName");
+            Microsoft.CodeAnalysis.Testing.DiagnosticResult expected = VerifyCS.Diagnostic("ISC1000").WithLocation(0).WithArguments("TypeName");
             await VerifyCS.VerifyCodeFixAsync(test, expected, fixtest);
         }
     }

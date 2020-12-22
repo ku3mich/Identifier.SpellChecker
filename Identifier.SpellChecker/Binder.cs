@@ -19,10 +19,10 @@ namespace Identifier.SpellChecker
             AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
             {
                 Fallbacklog(args.Name);
-                var name = new AssemblyName(args.Name);
+                AssemblyName name = new AssemblyName(args.Name);
                 if (Array.IndexOf(LocalRedirected, name.Name) > -1)
                 {
-                    var fname = Path.Combine(LocalFolder, $"{name.Name}.dll");
+                    string fname = Path.Combine(LocalFolder, $"{name.Name}.dll");
                     Fallbacklog(fname);
                     try
                     {

@@ -23,22 +23,22 @@ namespace Identifier.SpellChecker
         {
             Logger.LogTrace($"checking: [{identifier}]");
 
-            var parts = identifier
+            IdentifierPart[] parts = identifier
                 .SplitCamelCase()
                 .Analyze()
                 .ToArray();
 
-            var checkedParts = new List<CheckedPart>();
-            foreach (var part in parts)
+            List<CheckedPart> checkedParts = new List<CheckedPart>();
+            foreach (IdentifierPart part in parts)
             {
                 if (part.Type != PartType.Word)
                     continue;
 
-                var value = part.Value;
-                var checkResult = Checker.Check(value);
+                string value = part.Value;
+                bool checkResult = Checker.Check(value);
                 if (!checkResult)
                 {
-                    foreach (var customChecker in CustomCheckers)
+                    foreach (ISpellChecker customChecker in CustomCheckers)
                     {
 
                         checkResult = customChecker.Check(value);

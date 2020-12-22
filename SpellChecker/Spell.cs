@@ -12,8 +12,8 @@ namespace SpellChecker
 
         static WordList LoadWordList()
         {
-            using (var dicStream = Assembly.GetManifestResourceStream("SpellChecker.en_US.dic"))
-            using (var affStream = Assembly.GetManifestResourceStream("SpellChecker.en_US.aff"))
+            using (System.IO.Stream dicStream = Assembly.GetManifestResourceStream("SpellChecker.en_US.dic"))
+            using (System.IO.Stream affStream = Assembly.GetManifestResourceStream("SpellChecker.en_US.aff"))
             {
                 return WordList.CreateFromStreams(dicStream, affStream);
             }

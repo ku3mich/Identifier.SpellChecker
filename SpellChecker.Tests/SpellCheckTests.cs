@@ -7,28 +7,28 @@ namespace SpellChecker.Tests
         [Fact]
         public void SimpleCheck_Correct()
         {
-            var result = Spell.Checker.Check("father");
+            bool result = Spell.Checker.Check("father");
             Assert.True(result);
         }
 
         [Fact]
         public void SimpleCheck_Incorrect()
         {
-            var result = Spell.Checker.Check("fathe");
+            bool result = Spell.Checker.Check("fathe");
             Assert.False(result);
         }
 
         [Fact]
         public void SimpleCheck_Details()
         {
-            var result = Spell.Checker.CheckDetails("fathe");
+            WeCantSpell.Hunspell.SpellCheckResult result = Spell.Checker.CheckDetails("fathe");
             Assert.False(result.Correct);
         }
 
         [Fact]
         public void SimpleCheck_Suggest()
         {
-            var result = Spell.Checker.Suggest("fathe");
+            System.Collections.Generic.IEnumerable<string> result = Spell.Checker.Suggest("fathe");
             Assert.NotEmpty(result);
         }
 

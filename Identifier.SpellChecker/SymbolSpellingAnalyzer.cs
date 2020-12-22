@@ -20,21 +20,21 @@ namespace Identifier.SpellChecker
 
         public void Analyze(SymbolAnalysisContext context)
         {
-            var symbol = context.Symbol;
-            foreach (var identifier in GetSymbols(symbol))
+            ISymbol symbol = context.Symbol;
+            foreach (string identifier in GetSymbols(symbol))
             {
-                var checkResult = Speller.Check(identifier);
+                IdentifierCheckResult checkResult = Speller.Check(identifier);
                 if (checkResult.IsCorrect)
                     continue;
 
-                var inncorrectParts = checkResult
+                IEnumerable<string> inncorrectParts = checkResult
                     .Parts
                     .Where(s => !s.IsCorrect)
                     .Select(s => s.Part.Value);
 
-                var incorrectPartsArg = string.Join(", ", inncorrectParts);
+                string incorrectPartsArg = string.Join(", ", inncorrectParts);
 
-                var diagnostic = Diagnostic.Create(
+                Diagnostic diagnostic = Diagnostic.Create(
                     IdentifierSpellCheckerAnalyzer.Rule,
                     symbol.Locations[0],
                     identifier,

@@ -17,10 +17,10 @@ namespace SpellChecker
 
         private static IEnumerable<string> EnumerateWordsFromFile(string fileName)
         {
-            var lines = File.ReadAllLines(fileName);
-            foreach (var line in lines)
+            string[] lines = File.ReadAllLines(fileName);
+            foreach (string line in lines)
             {
-                foreach (var word in line.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries))
+                foreach (string word in line.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries))
                 {
                     yield return word.ToLowerInvariant();
                 }

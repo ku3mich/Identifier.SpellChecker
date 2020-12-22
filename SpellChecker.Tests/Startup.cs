@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using XUnit.Extensions.Essentials;
+﻿using Microsoft.Extensions.Hosting;
+using Xunit.Extensions.Essentials;
 
 namespace SpellChecker.Tests
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services) => services.AddXUnitEssentials();
+        public void ConfigureHost(IHostBuilder hostBuilder) => hostBuilder.ConfigureXunitEssentials();
     }
 }

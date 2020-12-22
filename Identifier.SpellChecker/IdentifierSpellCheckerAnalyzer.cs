@@ -65,7 +65,7 @@ namespace Identifier.SpellChecker
         {
             _ServiceProvider = new Lazy<IServiceProvider>(() =>
             {
-                var services = new ServiceCollection();
+                ServiceCollection services = new ServiceCollection();
                 ConfigureServices(services);
                 return services.BuildServiceProvider();
             }, true);
@@ -81,12 +81,12 @@ namespace Identifier.SpellChecker
             ConfigureSpeller(services);
             services.AddTransient<IIdentifierSpeller, IdentifierSpeller>();
             services.AddSingleton<IEnumerable<ISpellChecker>>(CustomCheckers);
-            var analyzerTypes = typeof(IdentifierSpellCheckerAnalyzer)
+            IEnumerable<Type> analyzerTypes = typeof(IdentifierSpellCheckerAnalyzer)
                 .Assembly
                 .GetTypes()
                 .Where(s => s.IsClass && !s.IsAbstract && typeof(ISymbolAnalyzer).IsAssignableFrom(s));
 
-            foreach (var analyzerType in analyzerTypes)
+            foreach (Type analyzerType in analyzerTypes)
             {
                 services.AddSingleton(typeof(ISymbolAnalyzer), analyzerType);
             }
@@ -114,9 +114,9 @@ namespace Identifier.SpellChecker
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
             // context.EnableConcurrentExecution();
 
-            var symbolAnalyzers = ServiceProvider.GetRequiredService<IEnumerable<ISymbolAnalyzer>>();
+            IEnumerable<ISymbolAnalyzer> symbolAnalyzers = ServiceProvider.GetRequiredService<IEnumerable<ISymbolAnalyzer>>();
 
-            foreach (var analyzer in symbolAnalyzers)
+            foreach (ISymbolAnalyzer analyzer in symbolAnalyzers)
             {
                 Logger.LogTrace($"registering analyzer: {analyzer.GetType().Name} for {analyzer.Kind}");
                 context.RegisterSymbolAction(analyzer.Analyze, analyzer.Kind);
@@ -129,14 +129,14 @@ namespace Identifier.SpellChecker
         {
             CustomCheckers.Clear();
 
-            var additionalFiles = context.Options.AdditionalFiles;
-            var checkers = additionalFiles
+            ImmutableArray<AdditionalText> additionalFiles = context.Options.AdditionalFiles;
+            IEnumerable<FileWordListChecker> checkers = additionalFiles
                 .Where(s => Path.GetExtension(s.Path) == ".spell")
                 .Select(s =>
                 {
                     try
                     {
-                        var c = new FileWordListChecker(s.Path);
+                        FileWordListChecker c = new FileWordListChecker(s.Path);
                         return c;
                     }
                     catch (Exception ex)

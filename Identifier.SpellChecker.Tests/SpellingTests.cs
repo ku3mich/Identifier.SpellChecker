@@ -18,14 +18,14 @@ namespace Identifier.SpellChecker.Tests
         [Theory]
         public void Spelling(string identifier)
         {
-            var serviceCollection = new ServiceCollection();
+            ServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(b => b.SetMinimumLevel(LogLevel.Trace).AddXUnit(TestOutputHelper));
             serviceCollection.AddSingleton(RealSpellChecker.Instance);
             serviceCollection.AddSingleton<IIdentifierSpeller, IdentifierSpeller>();
 
-            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            using ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var speller = serviceProvider.GetRequiredService<IIdentifierSpeller>();
+            IIdentifierSpeller speller = serviceProvider.GetRequiredService<IIdentifierSpeller>();
             speller.Check(identifier);
         }
     }

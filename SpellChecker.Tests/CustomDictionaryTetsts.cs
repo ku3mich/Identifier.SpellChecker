@@ -18,7 +18,7 @@ namespace SpellChecker.Tests
         [InlineData("xsd")]
         public void Spelling(string s)
         {
-            var result = Checker.Check(s);
+            bool result = Checker.Check(s);
             Assert.True(result);
         }
     }

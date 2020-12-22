@@ -13,7 +13,7 @@ namespace Identifier.SpellChecker
 
         public override IEnumerable<string> GetSymbols(ISymbol symbol)
         {
-            var s = (IPropertySymbol)symbol;
+            IPropertySymbol s = (IPropertySymbol)symbol;
             yield return s.Name;
         }
     }

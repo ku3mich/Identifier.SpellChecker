@@ -13,9 +13,9 @@ namespace Identifier.SpellChecker
 
         public override IEnumerable<string> GetSymbols(ISymbol symbol)
         {
-            var localSymbol = (INamespaceSymbol)symbol;
-            var names = localSymbol.Name.Split(new[] { '.' });
-            foreach (var s in names)
+            INamespaceSymbol localSymbol = (INamespaceSymbol)symbol;
+            string[] names = localSymbol.Name.Split(new[] { '.' });
+            foreach (string s in names)
             {
                 yield return s;
             }
