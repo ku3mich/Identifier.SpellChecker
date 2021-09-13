@@ -7,22 +7,23 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 
-namespace Identifier.SpellChecker.Tests
+namespace Roslyn.Verifiers.Xunit
 {
-    public static partial class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
+    public class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
         where TAnalyzer : DiagnosticAnalyzer, new()
         where TCodeFix : CodeFixProvider, new()
     {
-        public static DiagnosticResult Diagnostic()
+        public DiagnosticResult Diagnostic()
             => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic();
 
-        public static DiagnosticResult Diagnostic(string diagnosticId)
+        public DiagnosticResult Diagnostic(string diagnosticId)
             => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(diagnosticId);
 
-        public static DiagnosticResult Diagnostic(DiagnosticDescriptor descriptor)
+        public DiagnosticResult Diagnostic(DiagnosticDescriptor descriptor)
             => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(descriptor);
 
-        public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
+        /*
+        public async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
         {
             Test test = new Test
             {
@@ -33,13 +34,13 @@ namespace Identifier.SpellChecker.Tests
             await test.RunAsync(CancellationToken.None);
         }
 
-        public static async Task VerifyCodeFixAsync(string source, string fixedSource)
+        public async Task VerifyCodeFixAsync(string source, string fixedSource)
             => await VerifyCodeFixAsync(source, DiagnosticResult.EmptyDiagnosticResults, fixedSource);
 
-        public static async Task VerifyCodeFixAsync(string source, DiagnosticResult expected, string fixedSource)
+        public async Task VerifyCodeFixAsync(string source, DiagnosticResult expected, string fixedSource)
             => await VerifyCodeFixAsync(source, new[] { expected }, fixedSource);
 
-        public static async Task VerifyCodeFixAsync(string source, DiagnosticResult[] expected, string fixedSource)
+        public async Task VerifyCodeFixAsync(string source, DiagnosticResult[] expected, string fixedSource)
         {
             Test test = new Test
             {
@@ -49,12 +50,13 @@ namespace Identifier.SpellChecker.Tests
 
             test.ExpectedDiagnostics.AddRange(expected);
             await test.RunAsync(CancellationToken.None);
-        }
+        } */
 
-        public class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>
+        /*public class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>
         {
             public Test()
             {
+                SolutionTransforms.AddRange(transformProvider.SolutionTransforms);
                 SolutionTransforms.Add((solution, projectId) =>
                 {
                     CompilationOptions compilationOptions = solution.GetProject(projectId).CompilationOptions;
@@ -65,6 +67,6 @@ namespace Identifier.SpellChecker.Tests
                     return solution;
                 });
             }
-        }
+        }*/
     }
 }

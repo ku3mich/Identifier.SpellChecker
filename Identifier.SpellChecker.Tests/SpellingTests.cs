@@ -1,32 +1,26 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 
 namespace Identifier.SpellChecker.Tests
 {
-    public class SpellingTests
-    {
-        private readonly ITestOutputHelper TestOutputHelper;
 
-        public SpellingTests(ITestOutputHelper testOutputHelper)
+    public class SpellingTests : XunitTest
+    {
+        private readonly IIdentifierSpeller Speller;
+
+        public SpellingTests(ITestOutputHelper helper, IdentifierSpeller speller) : base(helper)
         {
-            TestOutputHelper = testOutputHelper;
+            Speller = speller;
         }
 
-        [InlineData("XmlUtility")]
-        [Theory]
-        public void Spelling(string identifier)
+        [Fact]
+        public void Spelling()
         {
-            ServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddLogging(b => b.SetMinimumLevel(LogLevel.Trace).AddXUnit(TestOutputHelper));
-            serviceCollection.AddSingleton(RealSpellChecker.Instance);
-            serviceCollection.AddSingleton<IIdentifierSpeller, IdentifierSpeller>();
-
-            using ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-
-            IIdentifierSpeller speller = serviceProvider.GetRequiredService<IIdentifierSpeller>();
-            speller.Check(identifier);
+            var result = Speller.Check("XmlUtility");
+            Assert.False(result.IsCorrect);
+            Assert.Equal(2, result.Parts.Length);
+            Assert.False(result.Parts[0].IsCorrect);
+            Assert.True(result.Parts[1].IsCorrect);
         }
     }
 }

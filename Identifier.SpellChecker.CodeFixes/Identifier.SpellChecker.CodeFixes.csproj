@@ -1,21 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <RootNamespace>Identifier.SpellChecker</RootNamespace>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>Identifier.SpellChecker</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.11.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Identifier.SpellChecker\Identifier.SpellChecker.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Identifier.SpellChecker\Identifier.SpellChecker.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="CodeFixResources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="CodeFixResources.resx" />
-    <EmbeddedResource Update="CodeFixResources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="CodeFixResources.Designer.cs" />
-  </ItemGroup>
-
+    <ItemGroup>
+        <Compile Update="CodeFixResources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="CodeFixResources.resx" />
+        <EmbeddedResource Update="CodeFixResources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="CodeFixResources.Designer.cs" />
+    </ItemGroup>
 </Project>

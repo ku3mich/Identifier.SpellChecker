@@ -1,45 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="MartinCostello.Logging.XUnit" Version="0.1.0" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-		<PackageReference Include="xunit" Version="2.4.1" />
-		<PackageReference Include="XUnit.Extensions.Essentials" Version="0.3.3" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="OpenCover" Version="4.7.922" />
-		<PackageReference Include="coverlet.msbuild" Version="2.9.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis" Version="3.8.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" Version="1.0.1-beta1.*" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing.XUnit" Version="1.0.1-beta1.*" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing.XUnit" Version="1.0.1-beta1.*" />
-		<PackageReference Include="XunitContext" Version="3.0.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="XUnit.Extensions.Essentials" Version="0.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="OpenCover" Version="4.7.1221" />
+    <PackageReference Include="coverlet.msbuild" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" Version="1.1.1-beta1.21413.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeFix.Testing.XUnit" Version="1.1.1-beta1.21413.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeRefactoring.Testing.XUnit" Version="1.1.1-beta1.21413.1" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Identifier.SpellChecker.CodeFixes\Identifier.SpellChecker.CodeFixes.csproj" />
-		<ProjectReference Include="..\Identifier.SpellChecker\Identifier.SpellChecker.csproj" />
-		<ProjectReference Include="..\SpellChecker\SpellChecker.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Remove="sample/**/*.*" />
-		<None Include="sample/**/*.*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Identifier.SpellChecker.CodeFixes\Identifier.SpellChecker.CodeFixes.csproj" />
+    <ProjectReference Include="..\Identifier.SpellChecker\Identifier.SpellChecker.csproj" />
+    <ProjectReference Include="..\Roslyn.Verifiers.Xunit\Roslyn.Verifiers.Xunit.csproj" />
+    <ProjectReference Include="..\Roslyn.Verifiers\Roslyn.Verifiers.csproj" />
+    <ProjectReference Include="..\SpellChecker\SpellChecker.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="sample/**/*.*" />
+    <None Include="sample/**/*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

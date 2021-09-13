@@ -6,14 +6,13 @@ namespace Identifier.SpellChecker.Tests
     public class CamelCaseSplitTests
     {
         [Fact]
-        public void Null()
+        public void Accepts_Null()
         {
             Assert.Empty(((string)null).SplitCamelCase());
         }
 
-
         [Fact]
-        public void AnalyzeEmpty()
+        public void Analyze_EmptyParts()
         {
             Assert.Empty(((string)null).SplitCamelCase().Analyze());
         }

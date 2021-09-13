@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.Verifiers", "Roslyn.Verifiers\Roslyn.Verifiers.csproj", "{51B59CBF-4166-44B0-AB1C-444A550763B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roslyn.Verifiers.Xunit", "Roslyn.Verifiers.Xunit\Roslyn.Verifiers.Xunit.csproj", "{1CD5501E-F747-4BF3-A6C5-1C8A28C5BCE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{EB430848-2DA5-41B3-B8FE-49B502B5658B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB430848-2DA5-41B3-B8FE-49B502B5658B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB430848-2DA5-41B3-B8FE-49B502B5658B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51B59CBF-4166-44B0-AB1C-444A550763B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51B59CBF-4166-44B0-AB1C-444A550763B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51B59CBF-4166-44B0-AB1C-444A550763B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51B59CBF-4166-44B0-AB1C-444A550763B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD5501E-F747-4BF3-A6C5-1C8A28C5BCE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD5501E-F747-4BF3-A6C5-1C8A28C5BCE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD5501E-F747-4BF3-A6C5-1C8A28C5BCE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD5501E-F747-4BF3-A6C5-1C8A28C5BCE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

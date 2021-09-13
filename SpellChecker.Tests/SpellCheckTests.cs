@@ -31,7 +31,5 @@ namespace SpellChecker.Tests
             System.Collections.Generic.IEnumerable<string> result = Spell.Checker.Suggest("fathe");
             Assert.NotEmpty(result);
         }
-
-
     }
 }
