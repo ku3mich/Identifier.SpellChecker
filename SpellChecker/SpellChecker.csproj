@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<IsPackable>false</IsPackable>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Include="en_US.aff" />
-		<EmbeddedResource Include="en_US.dic" />
-	</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="en_US.aff" />
+    <EmbeddedResource Include="en_US.dic" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WeCantSpell.Hunspell" Version="3.0.1" />
+  </ItemGroup>
 
 </Project>
