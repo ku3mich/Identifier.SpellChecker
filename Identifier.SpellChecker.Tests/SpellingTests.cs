@@ -3,7 +3,6 @@ using Xunit.Abstractions;
 
 namespace Identifier.SpellChecker.Tests
 {
-
     public class SpellingTests : XunitTest
     {
         private readonly IIdentifierSpeller Speller;

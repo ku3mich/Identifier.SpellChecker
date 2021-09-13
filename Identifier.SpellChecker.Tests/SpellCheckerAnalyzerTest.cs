@@ -6,7 +6,11 @@ namespace Identifier.SpellChecker.Tests
 {
     public class SpellCheckerAnalyzerTest : CSharpAnalyzerTest<IdentifierSpellCheckerAnalyzer>
     {
-        public SpellCheckerAnalyzerTest(IdentifierSpellCheckerAnalyzer analyzer, ISolutionTransformProvider transformProvider, ILanguageVersionProvider versionProvider, ICompilationOptionsFactory compilationOptionsFactory) : base(analyzer, transformProvider, versionProvider, compilationOptionsFactory)
+        public SpellCheckerAnalyzerTest(
+            IdentifierSpellCheckerAnalyzer analyzer,
+            ISolutionTransformProvider transformProvider,
+            ILanguageVersionProvider versionProvider,
+            ICompilationOptionsFactory compilationOptionsFactory) : base(analyzer, transformProvider, versionProvider, compilationOptionsFactory)
         {
         }
     }

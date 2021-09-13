@@ -63,12 +63,14 @@ namespace Identifier.SpellChecker
 
         public IdentifierSpellCheckerAnalyzer()
         {
-            _ServiceProvider = new Lazy<IServiceProvider>(() =>
+            IServiceProvider CreateServiceProvider()
             {
                 ServiceCollection services = new ServiceCollection();
                 ConfigureServices(services);
                 return services.BuildServiceProvider();
-            }, true);
+            }
+
+            _ServiceProvider = new Lazy<IServiceProvider>(CreateServiceProvider, true);
 
             _Logger = new Lazy<ILogger<IdentifierSpellCheckerAnalyzer>>(
                 () => ServiceProvider.GetRequiredService<ILogger<IdentifierSpellCheckerAnalyzer>>(),
@@ -108,11 +110,12 @@ namespace Identifier.SpellChecker
 
         public override void Initialize(AnalysisContext context)
         {
+            context.EnableConcurrentExecution();
+
             Logger.LogTrace("Initialize");
             context.RegisterCompilationStartAction(ReloadCustomDictionaries);
 
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
-            // context.EnableConcurrentExecution();
 
             IEnumerable<ISymbolAnalyzer> symbolAnalyzers = ServiceProvider.GetRequiredService<IEnumerable<ISymbolAnalyzer>>();
 
